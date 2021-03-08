@@ -1,0 +1,21 @@
+body {
+    color: black;
+}
+
+.choice-container {
+    display: flex;
+    margin-bottom: 10px;
+    width: 50%;
+    border-radius: 4px;
+    background: paleturquoise;
+    font-size: 15px;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.choice-container:hover {
+    transform: scale(1.02);
+    transform: transform 100ms;
+}
+}
+
