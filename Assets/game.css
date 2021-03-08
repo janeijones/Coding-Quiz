@@ -1,5 +1,6 @@
 body {
     color: black;
+    justify-content: center;
 }
 
 .choice-container {
@@ -9,6 +10,9 @@ body {
     border-radius: 4px;
     background: paleturquoise;
     font-size: 15px;
+}
+
+#game {
     justify-content: center;
     flex-direction: column;
 }
@@ -17,5 +21,24 @@ body {
     transform: scale(1.02);
     transform: transform 100ms;
 }
+
+.choice-prefix {
+    padding: 5px;
+
 }
 
+.choice-text {
+    padding: 5px;
+    width: 100%;
+}
+
+#hud {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.hud-prefix {
+    text-align: center;
+    font-size: 10px;
+}
