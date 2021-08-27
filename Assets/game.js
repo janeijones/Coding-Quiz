@@ -1,4 +1,4 @@
-const question = document.querySelector('#question');
+const questionEl = document.querySelector('#question');
 const choices = Array.from(document.querySelectorAll('.choice-text'));
 
 var currentQuestion = 0;
@@ -11,7 +11,7 @@ var timer;
 const timerCountdown = document.getElementById("countdownTimer");
 
 var highscore
-var questionCounter = 0;
+var questionIndex = 0;
 var quizQuestions = []
 
 const questions = [
@@ -68,7 +68,7 @@ const MAX_QUESTIONS = 5;
 function startGame()
 {   
    startTimer();
-   //getQuestion()
+   startQuestions();
    //questionCounter = 1
     // score = 0
     // quizQuestions = [...questions]
@@ -86,7 +86,17 @@ function startTimer(){
     }, 1000);
 }
 
-// getNewQuestion()
+function startQuestions() {
+    displayQuestions(questions[questionIndex])
+}
+
+
+function displayQuestions(question) {
+    questionEl.innerText = question.question
+    question.answers.forEach(answer => {
+
+    })
+}
 // {
 //     if (availableQuestions.length === 0 || questionsCounter > MAX_QUESTIONS){
 //         localStorage.setItem('mostRecentScore', score)
