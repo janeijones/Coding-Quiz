@@ -1,7 +1,13 @@
 const questionEl = document.querySelector('#question');
 const choices = Array.from(document.querySelectorAll('.choice-text'));
+const clickQuestion = document.querySelector('#game')
+const choicesOne = document.querySelector('#choice-one')
+const choicesTwo = document.querySelector('#choice-two')
+const choicesThree = document.querySelector('#choice-three')
+const choicesFour = document.querySelector('#choice-four')
 
-var currentQuestion = 0;
+console.log(choices);
+
 var questionsRight = 0;
 var score = 0;
 
@@ -21,7 +27,7 @@ const questions = [
         choice2: 'boolean',
         choice3: 'triple',
         choice4: 'object',
-        answer: 3,
+        answer: 'triple',
 
     },
     {
@@ -30,7 +36,7 @@ const questions = [
         choice2: '>',
         choice3: '+',
         choice4: '===',
-        answer: 1,
+        answer: '=',
 
     },
     {
@@ -39,7 +45,7 @@ const questions = [
         choice2: '15',
         choice3: '5',
         choice4: '20',
-        answer: 2,
+        answer: '15',
 
     },
     {
@@ -48,7 +54,7 @@ const questions = [
         choice2: '/**',
         choice3: '/!',
         choice4: '//',
-        answer: 4,
+        answer: '//'
 
     },
     {
@@ -57,7 +63,7 @@ const questions = [
         choice2: 'global',
         choice3: 'custom',
         choice4: 'entire',
-        answer: 1,
+        answer: 'local',
 
     }
 ]
@@ -68,7 +74,7 @@ const MAX_QUESTIONS = 5;
 function startGame()
 {   
    startTimer();
-   startQuestions();
+   displayQuestions(questionIndex, ...questions);
    //questionCounter = 1
     // score = 0
     // quizQuestions = [...questions]
@@ -86,17 +92,71 @@ function startTimer(){
     }, 1000);
 }
 
-function startQuestions() {
-    displayQuestions(questions[questionIndex])
+
+
+function displayQuestions(questionIndex, ...questions) {
+    questionEl.innerText = questions[questionIndex].question
+    
+
+    choicesOne.innerText = questions[questionIndex].choice1;
+    choicesTwo.innerText = questions[questionIndex].choice2;
+    choicesThree.innerText = questions[questionIndex].choice3;
+    choicesFour.innerText = questions[questionIndex].choice4;
+
+
+clickQuestion.addEventListener("click", function(e) {
+    if(e.target.classList.contains("choice-text")) {
+        if(e.target.value === questions[questionIndex].answer)
+            {
+                score++; 
+            }
+        else {
+            clock--; 
+            timerCountdown.textContent = clock;
+            score--;
+        }
+    }
+})
 }
+//     addClickHandler();
 
 
-function displayQuestions(question) {
-    questionEl.innerText = question.question
-    question.answers.forEach(answer => {
+// function addClickHandler() {
+// choices.forEach(choice => {
+//                 choice.addEventListener("click", function(e) {
+//                     if(e.target.value === questions[questionsIndex].answer)
+//                     questionIndex++; 
+//                     else {
+//                         clock = clock - 5;
+//                         timerCountdown.textContent = clock; 
+//                     }
+//                 })
+            
 
-    })
-}
+                
+// })}
+// }
+        //    var number = 1;  
+        //   const answerChoice = choice.dataset['number']
+        //   console.log(answerChoice);
+
+
+    // choices.forEach(choice => {
+    //        var number = 1;  
+    //       const answerChoice = choice.dataset['number']
+    //       console.log(answerChoice);
+    
+    //     for (var i = 2; i < 6; i++){
+          
+    //         // console.log(obj.answers)
+    //         // console.log(questions[questionIndex].questions[i]);
+    //         // choice.innerText = questions[i]
+    //     }
+          
+    // })
+    
+
+
 // {
 //     if (availableQuestions.length === 0 || questionsCounter > MAX_QUESTIONS){
 //         localStorage.setItem('mostRecentScore', score)
@@ -105,9 +165,8 @@ function displayQuestions(question) {
 
 //     questionCounter++
     
-//     const questionsIndex = Math.floor(math.random() * quizQuestions.length)
-//     currentQuestion = quizQuestions[questionsIndex]
-//     question.innerText = currentQuestion.question
+    
+//     questionEl.innerText = currentQuestion.question
 
 //     choices.ForEach(choice =>{
 //         const number = choice.dataset['number']
