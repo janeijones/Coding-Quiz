@@ -1,13 +1,20 @@
 const question = document.querySelector('#question');
 const choices = Array.from(document.querySelectorAll('.choice-text'));
 
-let currentQuestion = {};
-let userInput = true;
-let score = 0;
-let questionCounter = 0;
-let quizQuestions = []
+var currentQuestion = 0;
+var questionsRight = 0;
+var score = 0;
 
-let questions = [
+
+var clock = 60;
+var timer;
+const timerCountdown = document.getElementById("countdownTimer");
+
+var highscore
+var questionCounter = 0;
+var quizQuestions = []
+
+const questions = [
     {
         question: 'What is NOT a variable type used in JavaScipt?',
         choice1: 'string',
@@ -58,45 +65,71 @@ let questions = [
 const SCORE_POINT = 100;
 const MAX_QUESTIONS = 5;
 
-startGame()
-{
-    questionCounter = 0
-    score = 0
-    quizQuestions = [...questions]
-    getNewQuestion()
+function startGame()
+{   
+   startTimer();
+   //getQuestion()
+   //questionCounter = 1
+    // score = 0
+    // quizQuestions = [...questions]
+    // getNewQuestion()
 }
 
-getNewQuestion()
-{
-    if (availableQuestions.length === 0 || questionsCounter > MAX_QUESTIONS){
-        localStorage.setItem('mostRecentScore', score)
-        return window.location.assign('/end.html')
-    }
+function startTimer(){
+    timer = setInterval(() => {
+        clock--;
+        timerCountdown.innerText = clock;
+        if (clock <= 0){
+            clearInterval(timer)
+            showResults()
+        }
+    }, 1000);
+}
 
-    questionCounter++
+// getNewQuestion()
+// {
+//     if (availableQuestions.length === 0 || questionsCounter > MAX_QUESTIONS){
+//         localStorage.setItem('mostRecentScore', score)
+//         return window.location.assign('/end.html')
+//     }
+
+//     questionCounter++
     
-    const questionsIndex = Math.floor(math.random() * quizQuestions.length)
-    currentQuestion = quizQuestions[questionsIndex]
-    question.innerText = currentQuestion.question
+//     const questionsIndex = Math.floor(math.random() * quizQuestions.length)
+//     currentQuestion = quizQuestions[questionsIndex]
+//     question.innerText = currentQuestion.question
 
-    choices.ForEach(choice =>{
-        const number = choice.dataset['number']
-        choice.innerText = currentQuestion['choice' + number]
-    })
+//     choices.ForEach(choice =>{
+//         const number = choice.dataset['number']
+//         choice.innerText = currentQuestion['choice' + number]
+//     })
 
-    quizQuestions.splice(questionsIndex, 1)
+//     quizQuestions.splice(questionsIndex, 1)
 
-    userInput = true
+//     userInput = true
 
-}
+// }
 
-choices.forEach(choice =>{
-    choice.addEventListener('click', e => {
-        if(!userInput) return
+// choices.forEach(choice =>{
+//     choice.addEventListener('click', e => {
+//         if(!userInput) return
 
-        userInput = false
-        const selectedAnswer = selectedChoice.dataset['number']
+//         userInput = false
+//         const selectedAnswer = selectedChoice.dataset['number']
 
-        let classToApply = selectedAnswer == currentQuestion.answer ? 'correct'
-})
-})
+//         let classToApply = selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect'
+//             if(classToApply === 'correct')
+//             {
+//                 incrementScore(SCORE_POINTS)
+//             }
+
+//         selectedChoice.parentElement.classList.add(classToApply)
+//     })  
+// })
+
+// incrementScore = num => {
+//     score +=num
+// }
+
+
+startGame();
