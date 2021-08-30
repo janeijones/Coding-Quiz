@@ -1,11 +1,7 @@
 const questionEl = document.querySelector('#question');
-// const choices = Array.from(document.querySelectorAll('.choice-text'));
+const choices = Array.from(document.querySelectorAll('.choice-text'));
 const choicesEl = document.querySelectorAll('.choice-text')
 const clickQuestion = document.querySelector('#game')
-const choicesOne = document.querySelector('#choice-one')
-const choicesTwo = document.querySelector('#choice-two')
-const choicesThree = document.querySelector('#choice-three')
-const choicesFour = document.querySelector('#choice-four')
 
 // console.log(choices);
 
@@ -36,30 +32,18 @@ const questions = [
     },
     {
         question: 'Evaluate the statement for z: var x = 5; var y = 10; var z = x + y;',
-        choice1: '10',
-        choice2: '15',
-        choice3: '5',
-        choice4: '20',
-        answer: '15',
-
+        choices: ["10", "15", "5", "20"],
+        answer: "15"
     },
     {
         question: 'One line comments written in Javascript begin with?',
-        choice1: '<!---',
-        choice2: '/**',
-        choice3: '/!',
-        choice4: '//',
-        answer: '//'
-
+        choices: ["<!---", "/**", "/!", "//"],
+        answer: "//"
     },
     {
         question: 'Variables declared within a JavaScript function, have a _______ scope.',
-        choice1: 'local',
-        choice2: 'global',
-        choice3: 'custom',
-        choice4: 'entire',
-        answer: 'local',
-
+        choices: ["local", "global", "custom", "entire"],
+        answer: "local"
     }
 ]
 
@@ -71,6 +55,7 @@ function startGame(questions)
     var questionIndex = 0;
    startTimer();
    displayQuestions(questionIndex, questions);
+   addClickHandler(questionIndex);
 
    //questionCounter = 1
     // score = 0
@@ -84,7 +69,7 @@ function startTimer(){
         timerCountdown.innerText = clock;
         if (clock <= 0){
             clearInterval(timer)
-            // showResults()
+            // showResults() -- for high score
         }
     }, 1000);
 }
@@ -92,8 +77,6 @@ function startTimer(){
 
 
 function displayQuestions(questionIndex, question) {
-
-    
     questionEl.innerText = question[questionIndex].question
     console.log(choicesEl.length)
     console.log("choices" + questions[questionIndex].choices[questionIndex])
@@ -101,15 +84,24 @@ function displayQuestions(questionIndex, question) {
     
     for (var i = 0; i < choicesEl.length; i++) {
 
-        choicesEl[i].innerText = questions[questionIndex].choices[i]
+        choicesEl[i].innerText = questions[questionIndex].choices[i];
 
     }
+}
 
-    // choicesOne.innerText = questions[questionIndex].choice1;
-    // choicesTwo.innerText = questions[questionIndex].choice2;
-    // choicesThree.innerText = questions[questionIndex].choice3;
-    // choicesFour.innerText = questions[questionIndex].choice4;
+function increaseScore(currentScore) {
+    return currentScore++;
+}
 
+function decreaseScore(currentScore) {
+    return currentScore--;
+}
+
+function showResults() {
+    window.location.assign('/end.html');
+
+
+}
     
 
 
@@ -132,21 +124,34 @@ function displayQuestions(questionIndex, question) {
 //     addClickHandler();
 
 
-function addClickHandler() {
-choices.forEach(choice => {
-                choice.addEventListener("click", function(e) {
-                    if(e.target.value === questions[questionsIndex].answer)
-                    questionIndex++; 
-                    else {
-                        clock = clock - 5;
-                        timerCountdown.textContent = clock; 
-                    }
-                })
-            })
-        }
-    }
             
-
+function addClickHandler(questionsIndex) {
+    choices.forEach(choice => {
+                    choice.addEventListener("click", function(e) {
+                     
+                        if(e.target.textContent = questions[questionsIndex].answer){
+                           
+                        console.log("Correct Answer!")
+                        console.log("Question Index " + questionsIndex )
+                        // increase score
+                        questionsIndex++;
+                        if(questionsIndex !== 4){
+                       
+                        displayQuestions(questionsIndex, questions);
+                        }
+                        else {
+                            console.log("Display results")
+                        }
+                    }
+                    
+                        else {
+                             console.log("Incorrect Answer!")
+                            clock = clock - 5;
+                            timerCountdown.textContent = clock; 
+                        }
+                    })
+                })
+        }
                 
 // })}
 // }
