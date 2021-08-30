@@ -3,19 +3,13 @@ const choices = Array.from(document.querySelectorAll('.choice-text'));
 const choicesEl = document.querySelectorAll('.choice-text')
 const clickQuestion = document.querySelector('#game')
 
-// console.log(choices);
-
-var questionsRight = 0;
-var score = 0;
-
 
 var clock = 60;
 var timer;
 const timerCountdown = document.getElementById("countdownTimer");
 
-var highscore
-var questionIndex = 0;
-var quizQuestions = []
+
+// var questionIndex = 0;
 
 const questions = [
     {
@@ -47,20 +41,15 @@ const questions = [
     }
 ]
 
-const SCORE_POINT = 100;
-const MAX_QUESTIONS = 6;
+
 
 function startGame(questions)
 {   
-    var questionIndex = 0;
+var questionIndex = 0;
+var currentScore = 10;
    startTimer();
    displayQuestions(questionIndex, questions);
-   addClickHandler(questionIndex);
-
-   //questionCounter = 1
-    // score = 0
-    // quizQuestions = [...questions]
-    // getNewQuestion()
+   addClickHandler(questionIndex, currentScore);
 }
 
 function startTimer(){
@@ -69,7 +58,6 @@ function startTimer(){
         timerCountdown.innerText = clock;
         if (clock <= 0){
             clearInterval(timer)
-            // showResults() -- for high score
         }
     }, 1000);
 }
@@ -78,9 +66,9 @@ function startTimer(){
 
 function displayQuestions(questionIndex, question) {
     questionEl.innerText = question[questionIndex].question
-    console.log(choicesEl.length)
-    console.log("choices" + questions[questionIndex].choices[questionIndex])
-    console.log(questions[questionIndex].choices[1])
+    // console.log(choicesEl.length)
+    // console.log("choices" + questions[questionIndex].choices[questionIndex])
+    // console.log(questions[questionIndex].choices[1])
     
     for (var i = 0; i < choicesEl.length; i++) {
 
@@ -89,16 +77,24 @@ function displayQuestions(questionIndex, question) {
     }
 }
 
-function increaseScore(currentScore) {
-    return currentScore++;
-}
+// function increaseScore(currentScore) {
+//     console.log(currentScore + "inc score")
+//     currentScore = currentScore + 1;
+//     console.log(currentScore + "inc score")
+//     return currentScore;
+// }
 
-function decreaseScore(currentScore) {
-    return currentScore--;
-}
+// function decreaseScore(currentScore) {
+//     console.log(currentScore + "dec score")
+//     currentScore = currentScore - 1;
+//     return currentScore;
+// }
 
-function showResults() {
-    window.location.assign('/end.html');
+function showResults(currentScore) {
+   
+    localStorage.setItem('recentScore', currentScore)
+    containerEl = document.querySelector('.container');
+    containerEl.innerHTML = "High Score: " + currentScore; 
 
 
 }
@@ -123,31 +119,51 @@ function showResults() {
 // }
 //     addClickHandler();
 
+function checkIndex(questionIndex, questions, currentScore) {
+    if(questionIndex !== 4){
+                       
+        displayQuestions(questionIndex, questions);
+        } else {
+            console.log("Display results")
+            showResults(currentScore);
+        }
+
+}
+
 
             
-function addClickHandler(questionsIndex) {
+function addClickHandler(questionIndex) {
+        var currentScore = 0;
     choices.forEach(choice => {
                     choice.addEventListener("click", function(e) {
+                        console.log(questions[questionIndex].answer + " actual answer")
+                        console.log(e.target.textContent + " text content - clicked " );
+                        console.log(currentScore + "Current Score");
                      
-                        if(e.target.textContent = questions[questionsIndex].answer){
+                        if(e.target.textContent == questions[questionIndex].answer){
                            
                         console.log("Correct Answer!")
-                        console.log("Question Index " + questionsIndex )
-                        // increase score
-                        questionsIndex++;
-                        if(questionsIndex !== 4){
-                       
-                        displayQuestions(questionsIndex, questions);
+                        // console.log(e.target.textContent + " text content - correct " );
+                        // console.log(questions[questionsIndex].answer + " actual answer")
+                        // increaseScore(currentScore);
+                        currentScore++;
+                        console.log("increase score after return from function" + currentScore)
+                        questionIndex++;
+                        checkIndex(questionIndex, questions, currentScore);
                         }
-                        else {
-                            console.log("Display results")
-                        }
-                    }
                     
                         else {
-                             console.log("Incorrect Answer!")
+                        console.log("Incorrect Answer!")
+                        console.log()
+                        //  decreaseScore(currentScore);
+                        currentScore--;
                             clock = clock - 5;
                             timerCountdown.textContent = clock; 
+                            questionIndex++;
+                        checkIndex(questionIndex, questions, currentScore);
+                            // if (clock <= 0) {
+                            //     showResults(currentScore);
+                            // }
                         }
                     })
                 })
