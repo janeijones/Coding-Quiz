@@ -1,12 +1,13 @@
 const questionEl = document.querySelector('#question');
-const choices = Array.from(document.querySelectorAll('.choice-text'));
+// const choices = Array.from(document.querySelectorAll('.choice-text'));
+const choicesEl = document.querySelectorAll('.choice-text')
 const clickQuestion = document.querySelector('#game')
 const choicesOne = document.querySelector('#choice-one')
 const choicesTwo = document.querySelector('#choice-two')
 const choicesThree = document.querySelector('#choice-three')
 const choicesFour = document.querySelector('#choice-four')
 
-console.log(choices);
+// console.log(choices);
 
 var questionsRight = 0;
 var score = 0;
@@ -22,21 +23,15 @@ var quizQuestions = []
 
 const questions = [
     {
-        question: 'What is NOT a variable type used in JavaScipt?',
-        choice1: 'string',
-        choice2: 'boolean',
-        choice3: 'triple',
-        choice4: 'object',
-        answer: 'triple',
+        question: "What is NOT a variable type used in JavaScipt?",
+        choices: ["string", "boolean", "triple", "object"],
+        answer: "triple",
 
     },
     {
-        question: 'Which is an assignment operator?',
-        choice1: '=',
-        choice2: '>',
-        choice3: '+',
-        choice4: '===',
-        answer: '=',
+        question: "Which is an assignment operator?",
+        choices: ["=", ">", "+", "===", "="],
+        answer: "=",
 
     },
     {
@@ -69,12 +64,14 @@ const questions = [
 ]
 
 const SCORE_POINT = 100;
-const MAX_QUESTIONS = 5;
+const MAX_QUESTIONS = 6;
 
-function startGame()
+function startGame(questions)
 {   
+    var questionIndex = 0;
    startTimer();
-   displayQuestions(questionIndex, ...questions);
+   displayQuestions(questionIndex, questions);
+
    //questionCounter = 1
     // score = 0
     // quizQuestions = [...questions]
@@ -87,50 +84,67 @@ function startTimer(){
         timerCountdown.innerText = clock;
         if (clock <= 0){
             clearInterval(timer)
-            showResults()
+            // showResults()
         }
     }, 1000);
 }
 
 
 
-function displayQuestions(questionIndex, ...questions) {
-    questionEl.innerText = questions[questionIndex].question
+function displayQuestions(questionIndex, question) {
+
+    
+    questionEl.innerText = question[questionIndex].question
+    console.log(choicesEl.length)
+    console.log("choices" + questions[questionIndex].choices[questionIndex])
+    console.log(questions[questionIndex].choices[1])
+    
+    for (var i = 0; i < choicesEl.length; i++) {
+
+        choicesEl[i].innerText = questions[questionIndex].choices[i]
+
+    }
+
+    // choicesOne.innerText = questions[questionIndex].choice1;
+    // choicesTwo.innerText = questions[questionIndex].choice2;
+    // choicesThree.innerText = questions[questionIndex].choice3;
+    // choicesFour.innerText = questions[questionIndex].choice4;
+
     
 
-    choicesOne.innerText = questions[questionIndex].choice1;
-    choicesTwo.innerText = questions[questionIndex].choice2;
-    choicesThree.innerText = questions[questionIndex].choice3;
-    choicesFour.innerText = questions[questionIndex].choice4;
 
-
-clickQuestion.addEventListener("click", function(e) {
-    if(e.target.classList.contains("choice-text")) {
-        if(e.target.value === questions[questionIndex].answer)
-            {
-                score++; 
-            }
-        else {
-            clock--; 
-            timerCountdown.textContent = clock;
-            score--;
-        }
-    }
-})
-}
+// clickQuestion.addEventListener("click", function(e) {
+//     if(e.target.classList.contains("choice-text")) {
+//         console.log(questions[questionIndex].answer)
+//         if(e.target.value === questions[questionIndex].answer)
+//             {
+//                 score++; 
+//             }
+//         else {
+//             clock--; 
+//             timerCountdown.textContent = clock;
+//             score--;
+//         }
+//     }
+// questionIndex++; 
+// })
+// }
 //     addClickHandler();
 
 
-// function addClickHandler() {
-// choices.forEach(choice => {
-//                 choice.addEventListener("click", function(e) {
-//                     if(e.target.value === questions[questionsIndex].answer)
-//                     questionIndex++; 
-//                     else {
-//                         clock = clock - 5;
-//                         timerCountdown.textContent = clock; 
-//                     }
-//                 })
+function addClickHandler() {
+choices.forEach(choice => {
+                choice.addEventListener("click", function(e) {
+                    if(e.target.value === questions[questionsIndex].answer)
+                    questionIndex++; 
+                    else {
+                        clock = clock - 5;
+                        timerCountdown.textContent = clock; 
+                    }
+                })
+            })
+        }
+    }
             
 
                 
@@ -201,4 +215,5 @@ clickQuestion.addEventListener("click", function(e) {
 // }
 
 
-startGame();
+
+ startGame(questions);
