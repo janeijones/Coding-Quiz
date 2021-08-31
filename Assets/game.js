@@ -9,8 +9,6 @@ var timer;
 const timerCountdown = document.getElementById("countdownTimer");
 
 
-// var questionIndex = 0;
-
 const questions = [
     {
         question: "What is NOT a variable type used in JavaScipt?",
@@ -58,6 +56,7 @@ function startTimer(){
         timerCountdown.innerText = clock;
         if (clock <= 0){
             clearInterval(timer)
+            
         }
     }, 1000);
 }
@@ -82,6 +81,7 @@ function showResults(currentScore) {
     localStorage.setItem('recentScore', currentScore)
     const recentScore = localStorage.getItem('recentStore')
     const highScore = localStorage.getItem('highScore')
+
     
 
     if(highScore === null) {
@@ -98,6 +98,8 @@ function showResults(currentScore) {
     }
 
     containerEl = document.querySelector('.container');
+
+   
     containerEl.innerHTML = " Your Score: " + currentScore; 
 }
     
@@ -108,6 +110,8 @@ function checkIndex(questionIndex, questions, currentScore) {
         displayQuestions(questionIndex, questions);
         } else {
             console.log("Display results")
+            timerCountdown.innerText = " ";
+    
             showResults(currentScore);
         }
 
@@ -116,7 +120,8 @@ function checkIndex(questionIndex, questions, currentScore) {
 
             
 function addClickHandler(questionIndex) {
-        var currentScore = 0;
+
+        var currentScore = 10;
     choices.forEach(choice => {
                     choice.addEventListener("click", function(e) {
                         console.log(questions[questionIndex].answer + " actual answer")
@@ -144,80 +149,13 @@ function addClickHandler(questionIndex) {
                             timerCountdown.textContent = clock; 
                             questionIndex++;
                         checkIndex(questionIndex, questions, currentScore);
-                            // if (clock <= 0) {
-                            //     showResults(currentScore);
-                            // }
+                            if (clock <= 0) {
+                                showResults(currentScore);
+                            }
                         }
                     })
                 })
         }
-                
-// })}
-// }
-        //    var number = 1;  
-        //   const answerChoice = choice.dataset['number']
-        //   console.log(answerChoice);
-
-
-    // choices.forEach(choice => {
-    //        var number = 1;  
-    //       const answerChoice = choice.dataset['number']
-    //       console.log(answerChoice);
     
-    //     for (var i = 2; i < 6; i++){
-          
-    //         // console.log(obj.answers)
-    //         // console.log(questions[questionIndex].questions[i]);
-    //         // choice.innerText = questions[i]
-    //     }
-          
-    // })
-    
-
-
-// {
-//     if (availableQuestions.length === 0 || questionsCounter > MAX_QUESTIONS){
-//         localStorage.setItem('mostRecentScore', score)
-//         return window.location.assign('/end.html')
-//     }
-
-//     questionCounter++
-    
-    
-//     questionEl.innerText = currentQuestion.question
-
-//     choices.ForEach(choice =>{
-//         const number = choice.dataset['number']
-//         choice.innerText = currentQuestion['choice' + number]
-//     })
-
-//     quizQuestions.splice(questionsIndex, 1)
-
-//     userInput = true
-
-// }
-
-// choices.forEach(choice =>{
-//     choice.addEventListener('click', e => {
-//         if(!userInput) return
-
-//         userInput = false
-//         const selectedAnswer = selectedChoice.dataset['number']
-
-//         let classToApply = selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect'
-//             if(classToApply === 'correct')
-//             {
-//                 incrementScore(SCORE_POINTS)
-//             }
-
-//         selectedChoice.parentElement.classList.add(classToApply)
-//     })  
-// })
-
-// incrementScore = num => {
-//     score +=num
-// }
-
-
 
  startGame(questions);
