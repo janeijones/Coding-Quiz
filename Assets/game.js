@@ -77,50 +77,33 @@ function displayQuestions(questionIndex, question) {
     }
 }
 
-// function increaseScore(currentScore) {
-//     console.log(currentScore + "inc score")
-//     currentScore = currentScore + 1;
-//     console.log(currentScore + "inc score")
-//     return currentScore;
-// }
-
-// function decreaseScore(currentScore) {
-//     console.log(currentScore + "dec score")
-//     currentScore = currentScore - 1;
-//     return currentScore;
-// }
-
 function showResults(currentScore) {
    
     localStorage.setItem('recentScore', currentScore)
+    const recentScore = localStorage.getItem('recentStore')
+    const highScore = localStorage.getItem('highScore')
+    
+
+    if(highScore === null) {
+        localStorage.setItem('highScore', currentScore)
+        console.log("It's null")
+
+    }
+    else if (recentScore < highScore) {
+        localStorage.setItem('highScore', currentScore)
+        console.log("Should change");
+    }
+    else {
+        console.log("It's else")
+    }
+
     containerEl = document.querySelector('.container');
-    containerEl.innerHTML = "High Score: " + currentScore; 
-
-
+    containerEl.innerHTML = " Your Score: " + currentScore; 
 }
     
 
-
-// clickQuestion.addEventListener("click", function(e) {
-//     if(e.target.classList.contains("choice-text")) {
-//         console.log(questions[questionIndex].answer)
-//         if(e.target.value === questions[questionIndex].answer)
-//             {
-//                 score++; 
-//             }
-//         else {
-//             clock--; 
-//             timerCountdown.textContent = clock;
-//             score--;
-//         }
-//     }
-// questionIndex++; 
-// })
-// }
-//     addClickHandler();
-
 function checkIndex(questionIndex, questions, currentScore) {
-    if(questionIndex !== 4){
+    if(questionIndex < 5){
                        
         displayQuestions(questionIndex, questions);
         } else {
