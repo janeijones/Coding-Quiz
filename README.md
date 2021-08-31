@@ -16,6 +16,8 @@ Hosted Page Here:
 
 <a href = "hhttps://janeijones.github.io/Coding-Quiz/">Quiz Deployed</a>
 
+![questions](./Assets/QuizQuestion.png)
+
 
 
 
