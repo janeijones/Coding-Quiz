@@ -1,26 +1,9 @@
-// var questions = [
-//     {
-//         prompt: "QUESTION1"
-//         answer: "a"
-//     },
-//     {
+highscoreEl = document.querySelector('.btn')
 
-//         prompt: "QUESTION2"
-//         answer: "a"
-//     },
-//     {
-//         prompt: "QUESTION3"
-//         answer: "c"
-//     },
-//     {
-//         prompt: "QUESTION4"
-//         answer: "b"
-//     },
-//     {
-//         prompt: "QUESTION5"
-//         answer: "d"
-//     }
+highscoreEl.addEventListener("click", function(e) {
+    e.preventDefault();
+    containerEl = document.querySelector('#container')
+    const highScore = localStorage.getItem("highScore")
+    containerEl.textContent = "High Score: " + highScore
 
-// ]
-
-// var scores = 
+})
